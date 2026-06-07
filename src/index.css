@@ -109,6 +109,17 @@ h1, h2, h3, h4, h5, h6 {
     transition: color 0.4s ease;
 }
 
+/* In dark mode, headings that are NOT gradient-text should be bright white */
+.dark h1:not(.gradient-text) .word-reveal:not(.gradient-text),
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+    color: #f1f5f9;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -142,6 +153,20 @@ img {
 
 .gradient-text {
     background: linear-gradient(135deg, var(--clr-secondary), var(--clr-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Dark mode: use bright vivid gradient so text is clearly visible on dark bg */
+.dark .gradient-text {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #a5f3fc 30%,
+        #818cf8 65%,
+        #c084fc 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -609,6 +634,19 @@ img {
     color: var(--clr-dark-text);
     margin-bottom: 36px;
     max-width: 550px;
+}
+
+/* Dark mode: hero description should be light/white for readability */
+.dark .hero-desc {
+    color: #cbd5e1;
+}
+
+.dark .hero-typewriter-container {
+    color: #a5f3fc;
+}
+
+.dark .typewriter-text {
+    border-right-color: #a5f3fc;
 }
 
 .hero-actions {
