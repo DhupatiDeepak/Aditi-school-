@@ -26,6 +26,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toasts, setToasts] = useState([]);
   const [theme, setTheme] = useState(() => {
+    // Read whatever the blocking inline script already set (defaults to 'dark')
     return localStorage.getItem('theme') || 'dark';
   });
 
@@ -34,9 +35,13 @@ export default function App() {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
+      root.style.colorScheme = 'dark';
     } else {
       root.classList.remove('dark');
+      root.style.colorScheme = 'light';
     }
+    // Clear the inline bg set by the blocking script — let CSS variables take over
+    root.style.backgroundColor = '';
     localStorage.setItem('theme', theme);
   }, [theme]);
 

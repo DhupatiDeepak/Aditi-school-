@@ -4,6 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      CRITICAL: This inline script runs SYNCHRONOUSLY before any CSS or React loads.
+      It reads localStorage and immediately applies the dark class to <html>.
+      This eliminates the white flash (FOUC) on page load/reload.
+      Default is DARK mode if no preference is saved.
+    -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme');
+        // Default to dark if nothing saved yet
+        var theme = saved === 'light' ? 'light' : 'dark';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          // Also set bg-color directly so even before CSS loads it's dark
+          document.documentElement.style.backgroundColor = '#0f172a';
+          document.documentElement.style.colorScheme = 'dark';
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.style.backgroundColor = '#ffffff';
+          document.documentElement.style.colorScheme = 'light';
+        }
+        // Persist default if not set
+        if (!saved) {
+          localStorage.setItem('theme', 'dark');
+        }
+      })();
+    </script>
+
     <!-- Primary SEO -->
     <title>Aditi Littils School | Nurturing Young Minds Since 2010 | Hyderabad</title>
     <meta name="description" content="Aditi Littils School – Telangana's trusted play school & primary school in BHEL Township, Hyderabad. Govt. recognised curriculum, experienced teachers, safe campus. Admissions open for Play Group, Nursery, LKG, UKG & Classes I–VII." />
